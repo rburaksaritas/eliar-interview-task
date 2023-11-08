@@ -4,7 +4,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:${BACKEND_PORT}"
+      - "8000:8000"
     env_file:
       - .env
     depends_on:
@@ -22,6 +22,19 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d
     restart: unless-stopped
+
+    frontend:
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      ports:
+        - "3000:3000"
+      volumes:
+        - ./frontend:/app
+        - /app/node_modules
+      environment:
+        - NODE_ENV=development
+      command: npm run serve
 
 volumes:
   postgres_data:
