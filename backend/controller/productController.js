@@ -1,9 +1,9 @@
 // backend/controller/productController.js
 const productService = require('../service/productService');
 
-const getProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
   try {
-    const products = await productService.getProducts();
+    const products = await productService.getAllProducts();
     res.json(products);
   } catch (err) {
     res.status(500).send(err.message);
@@ -53,7 +53,7 @@ const deleteProduct = async (req, res) => {
 };
 
 module.exports = {
-  getProducts,
+  getAllProducts,
   getProduct,
   createProduct,
   updateProduct,
