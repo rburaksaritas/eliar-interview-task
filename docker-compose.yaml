@@ -23,18 +23,18 @@ services:
       - ./database:/docker-entrypoint-initdb.d
     restart: unless-stopped
 
-    frontend:
-      build:
-        context: ./frontend
-        dockerfile: Dockerfile
-      ports:
-        - "3000:3000"
-      volumes:
-        - ./frontend:/app
-        - /app/node_modules
-      environment:
-        - NODE_ENV=development
-      command: npm run serve
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run serve
 
 volumes:
   postgres_data:
