@@ -4,11 +4,11 @@ services:
   backend:
     build: ./backend
     ports:
-      - "3000:${BACKEND_PORT}"
+      - "8000:${BACKEND_PORT}"
     env_file:
       - .env
     depends_on:
-      - db
+      - database
 
   database:
     image: postgres:latest
