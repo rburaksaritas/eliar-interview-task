@@ -19,6 +19,7 @@
                 <!-- Or some loading indicator -->
             </div>
             <div v-if="product" class="product-actions">
+                <button @click="goBack" class="go-back-button">Go Back</button>
                 <button @click="showUpdateForm = true" class="update-button">Update</button>
                 <button @click="deleteProduct" class="delete-button">Delete</button>
             </div>
@@ -97,7 +98,10 @@ export default {
                     console.error('Error deleting product:', error);
                     // Handle error here
                 });
-        }
+        },
+        goBack() {
+            this.$router.push('/');
+        },
     },
     watch: {
         product(newValue) {
@@ -237,6 +241,33 @@ body {
 .product-actions button.delete-button:hover {
     background-color: #c82333;
     /* Darken the color slightly when hovered */
+}
+
+.product-actions .go-back-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #6c757d;
+    /* Bootstrap secondary color for example */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    /* Remove outline */
+    transition: background-color 0.2s, transform 0.2s;
+    /* Smooth transition for background color and transform */
+}
+
+.go-back-button:hover {
+    background-color: #5a6268;
+    /* Darken the color slightly when hovered */
+    transform: translateY(-2px);
+    /* Slight lift effect */
+}
+
+.go-back-button:active {
+    transform: translateY(1px);
+    /* Push down effect when clicked */
 }
 
 .update-form {
