@@ -131,6 +131,21 @@ body {
   margin-top: 10px;
 }
 
+/* Add responsive design */
+@media (min-width: 768px) {
+    .product-detail-card {
+        flex-direction: row;
+    }
+
+    .product-detail-info {
+        margin-left: 2rem;
+    }
+
+    .product-detail-image {
+        max-width: 50%;
+    }
+}
+
 .footer {
   padding: 20px;
   background-color: #000;
