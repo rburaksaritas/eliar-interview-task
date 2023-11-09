@@ -12,7 +12,7 @@ const getProductById = async (id) => {
 
 const createProduct = async (name, description, price, image_url) => {
   const { rows } = await pool.query(
-    'INSERT INTO products (name, description, price, image_url) VALUES ($1, $2, $3, 4$) RETURNING *',
+    'INSERT INTO products (name, description, price, image_url) VALUES ($1, $2, $3, $4) RETURNING *',
     [name, description, price, image_url]
   );
   return rows[0];
