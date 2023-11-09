@@ -92,7 +92,7 @@ export default {
         deleteProduct() {
             axios.delete(`/api/products/${this.id}`)
                 .then(() => {
-                    // Handle the product deletion (e.g., redirect to the product list)
+                    this.$router.push('/');
                 })
                 .catch(error => {
                     console.error('Error deleting product:', error);
