@@ -7,13 +7,14 @@
     <div class="product-list-container">
       <h1>Product List</h1>
       <div class="product-grid">
-        <div class="product-card" v-for="product in products" :key="product.id">
+        <router-link class="product-card" v-for="product in products" :key="product.id"
+          :to="{ name: 'ProductDetail', params: { id: product.id } }" tag="div">
           <img :src="product.image_url" :alt="product.name" class="product-image" />
           <div class="product-info">
             <h2>{{ product.name }}</h2>
             <p>{{ product.description }}</p>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
     <footer class="footer">
@@ -50,7 +51,8 @@ export default {
 </script>
   
 <style>
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -59,7 +61,8 @@ html, body {
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Viewport height */
+  min-height: 100vh;
+  /* Viewport height */
 }
 
 .header {
@@ -100,6 +103,8 @@ html, body {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: #2c3e50;
   /* Smooth transition for transform and box-shadow */
 }
 
@@ -128,17 +133,25 @@ html, body {
 
 .footer {
   padding: 20px;
-  background-color: #000; /* Black background */
-  color: #fff; /* White text */
+  background-color: #000;
+  /* Black background */
+  color: #fff;
+  /* White text */
   text-align: center;
 }
-.footer a, .footer a:visited {
-  color: #fff; /* Sets the color to white */
-  text-decoration: none; /* Optional: removes the underline from the link */
+
+.footer a,
+.footer a:visited {
+  color: #fff;
+  /* Sets the color to white */
+  text-decoration: none;
+  /* Optional: removes the underline from the link */
 }
+
 .footer a:hover {
-  color: #ccc; /* Lighter shade of white for hover effect */
-  text-decoration: none; /* Optional: adds underline on hover */
-}
-</style>
+  color: #ccc;
+  /* Lighter shade of white for hover effect */
+  text-decoration: none;
+  /* Optional: adds underline on hover */
+}</style>
 
