@@ -18,6 +18,20 @@
                 <p>Loading...</p>
                 <!-- Or some loading indicator -->
             </div>
+            <div v-if="product" class="product-actions">
+                <button @click="showUpdateForm = true" class="update-button">Update</button>
+                <button @click="deleteProduct" class="delete-button">Delete</button>
+            </div>
+        </div>
+
+
+        <div v-if="showUpdateForm" class="update-form">
+            <input v-model="updateForm.name" placeholder="Name">
+            <textarea v-model="updateForm.description" placeholder="Description"></textarea>
+            <input v-model="updateForm.price" placeholder="Price">
+            <input v-model="updateForm.image_url" placeholder="Image URL">
+            <button @click="updateProduct">Submit Update</button>
+            <button @click="showUpdateForm = false">Cancel</button>
         </div>
         <footer class="footer">
             <p>2023 &copy; <a href="https://github.com/rburaksaritas"><strong>github.com/rburaksaritas</strong></a></p>
@@ -38,7 +52,14 @@ export default {
     },
     data() {
         return {
-            product: null
+            product: null,
+            showUpdateForm: false, // To toggle the update form
+            updateForm: { // To bind form inputs
+                name: '',
+                description: '',
+                price: '',
+                image_url: ''
+            }
         };
     },
     mounted() {
@@ -54,6 +75,34 @@ export default {
                     console.error('Error fetching product:', error);
                     // Handle error here, such as displaying an error message to the user
                 });
+        },
+        updateProduct() {
+            axios.put(`/api/products/${this.id}`, this.updateForm)
+                .then(response => {
+                    this.product = response.data;
+                    this.showUpdateForm = false; // Hide the form after update
+                    // You might want to show a success message or redirect
+                })
+                .catch(error => {
+                    console.error('Error updating product:', error);
+                    // Handle error here
+                });
+        },
+        deleteProduct() {
+            axios.delete(`/api/products/${this.id}`)
+                .then(() => {
+                    // Handle the product deletion (e.g., redirect to the product list)
+                })
+                .catch(error => {
+                    console.error('Error deleting product:', error);
+                    // Handle error here
+                });
+        }
+    },
+    watch: {
+        product(newValue) {
+            // When the product data is loaded, initialize the form with its data
+            this.updateForm = { ...newValue };
         }
     }
 };
@@ -62,39 +111,35 @@ export default {
 <style>
 html,
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .header {
-  padding: 20px;
-  background-color: #f8f8f8;
-  /* Light grey background, change as needed */
-  text-align: center;
-  /* Add other styles as needed */
+    padding: 20px;
+    background-color: #f8f8f8;
+    text-align: center;
 }
 
 .logo {
-  max-width: 200px;
-  /* Adjust size as needed */
-  /* Add other styles as needed */
+    max-width: 200px;
 }
 
 .product-detail-container {
     padding: 2rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: calc(50vh - 4rem);
     flex-grow: 1;
-    /* Adjust for the padding */
 }
 
 .product-detail-card {
@@ -147,27 +192,96 @@ body {
         max-width: 50%;
     }
 }
+
+.product-actions {
+    display: flex;
+    justify-content: center;
+    /* Center the buttons */
+    gap: 1rem;
+    /* Space between buttons */
+    margin-top: 1rem;
+}
+
+.product-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    /* Bootstrap primary color for example */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    /* Remove outline */
+    transition: background-color 0.2s, transform 0.2s;
+    /* Smooth transition for background color and transform */
+}
+
+.product-actions button:hover {
+    background-color: #0056b3;
+    /* Darken the color slightly when hovered */
+    transform: translateY(-2px);
+    /* Slight lift effect */
+}
+
+.product-actions button:active {
+    transform: translateY(1px);
+    /* Push down effect when clicked */
+}
+
+.product-actions button.delete-button {
+    background-color: #dc3545;
+    /* Bootstrap danger color for delete button */
+}
+
+.product-actions button.delete-button:hover {
+    background-color: #c82333;
+    /* Darken the color slightly when hovered */
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 1rem auto;
+}
+
+.update-form input,
+.update-form textarea {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.update-form button {
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+}
+
+.update-form button:hover {
+    background-color: #4cae4c;
+}
+
 .footer {
-  padding: 20px;
-  background-color: #000;
-  /* Black background */
-  color: #fff;
-  /* White text */
-  text-align: center;
+    padding: 20px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
 }
 
 .footer a,
 .footer a:visited {
-  color: #fff;
-  /* Sets the color to white */
-  text-decoration: none;
-  /* Optional: removes the underline from the link */
+    color: #fff;
+    text-decoration: none;
 }
 
 .footer a:hover {
-  color: #ccc;
-  /* Lighter shade of white for hover effect */
-  text-decoration: none;
-  /* Optional: adds underline on hover */
-}
-</style>
+    color: #ccc;
+    text-decoration: none;
+}</style>
