@@ -22,3 +22,10 @@ The database will run at `http://localhost:5432`.
 ```bash
 docker-compose down
 ```
+
+## Screenshots
+<img width="1440" alt="image" src="https://github.com/rburaksaritas/eliar/assets/86561984/727fd04a-a6e2-45f2-82cf-0340fd873011">
+<img width="1440" alt="image" src="https://github.com/rburaksaritas/eliar/assets/86561984/276ec227-a177-4db0-bd54-828131649314">
+<img width="1440" alt="image" src="https://github.com/rburaksaritas/eliar/assets/86561984/ef71410d-262b-4c91-bef4-5288d03b6afb">
+<img width="1440" alt="image" src="https://github.com/rburaksaritas/eliar/assets/86561984/0e58ece5-d8c0-4a7f-a50f-44b357ff4d78">
+
